@@ -18,8 +18,4 @@ export class Answer extends Entity<IAnswer> {
   get questionId() {
     return this.props.questionId;
   }
-
-  constructor(props: IAnswer, id?: string) {
-    super(props, id);
-  }
 }

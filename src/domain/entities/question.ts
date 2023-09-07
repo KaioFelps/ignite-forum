@@ -24,8 +24,4 @@ export class Question extends Entity<IQuestion> {
   get slug() {
     return this.props.slug;
   }
-
-  constructor(props: IQuestion, id?: string) {
-    super(props, id);
-  }
 }
