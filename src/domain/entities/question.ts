@@ -30,6 +30,14 @@ export class Question extends Entity<IQuestion> {
     return this.props.slug;
   }
 
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
+
   static create(props: Optional<IQuestion, "createdAt">, id?: UniqueEntityId) {
     const question = new Question({ ...props, createdAt: new Date() }, id);
 

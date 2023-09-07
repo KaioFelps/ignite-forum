@@ -23,6 +23,14 @@ export class Answer extends Entity<IAnswer> {
     return this.props.questionId;
   }
 
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
+
   static create(props: Optional<IAnswer, "createdAt">, id?: UniqueEntityId) {
     const answer = new Answer({ ...props, createdAt: new Date() }, id);
 
