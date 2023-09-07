@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import { AnswerQuestionService } from "./answer-question";
-import { IAnswerRepository } from "../repositories/answer-repository-interface";
+import { IAnswerRepository } from "@/domain/repositories/answer-repository-interface";
 
 const fakeAnswerRepository: IAnswerRepository = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
