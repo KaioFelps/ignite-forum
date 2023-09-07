@@ -1,3 +1,4 @@
+import { Optional } from "../../core/@types/optional";
 import { Entity } from "../../core/entities/entity";
 import { UniqueEntityId } from "../../core/entities/unique-entity-id";
 
@@ -20,5 +21,11 @@ export class Answer extends Entity<IAnswer> {
 
   get questionId() {
     return this.props.questionId;
+  }
+
+  static create(props: Optional<IAnswer, "createdAt">, id?: UniqueEntityId) {
+    const answer = new Answer({ ...props, createdAt: new Date() }, id);
+
+    return answer;
   }
 }
