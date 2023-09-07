@@ -1,10 +1,18 @@
 import { expect, test } from "vitest";
 import { AnswerQuestionService } from "./answer-question";
+import { IAnswerRepository } from "../repositories/answer-repository-interface";
 
-test("create answer", () => {
-  const answerQuestion = new AnswerQuestionService();
+const fakeAnswerRepository: IAnswerRepository = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async create(answer) {
+    return;
+  },
+};
 
-  const answer = answerQuestion.execute({
+test("create answer", async () => {
+  const answerQuestion = new AnswerQuestionService(fakeAnswerRepository);
+
+  const answer = await answerQuestion.execute({
     questionId: "1",
     instructorId: "1",
     content: "Nova resposta",
