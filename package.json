@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
     "@types/node": "^20.4.8",
+    "eslint": "^8.48.0",
     "typescript": "^5.2.2"
   }
 }
