@@ -1,7 +1,7 @@
-import { randomUUID } from "node:crypto";
+import { UniqueEntityId } from "./unique-entity-id";
 
 export class Entity<PropsType> {
-  private _id: string;
+  private _id: UniqueEntityId;
 
   // protected indica que essa propriedade só será acessível à classe entity e aquelas classes que a extendem.
   protected props: PropsType;
@@ -11,7 +11,7 @@ export class Entity<PropsType> {
   }
 
   constructor(props: PropsType, id?: string) {
-    this._id = id ?? randomUUID();
+    this._id = new UniqueEntityId(id);
     this.props = props;
   }
 }
