@@ -1,9 +1,10 @@
+import { UniqueEntityId } from "../../core/entities/unique-entity-id";
 import { Answer } from "../entities/answer";
 import { IAnswerRepository } from "../repositories/answer-repository-interface";
 
 interface IAnswerQuestionService {
-  instructorId: string;
-  questionId: string;
+  instructorId: UniqueEntityId;
+  questionId: UniqueEntityId;
   content: string;
 }
 
