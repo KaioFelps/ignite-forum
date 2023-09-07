@@ -1,4 +1,3 @@
-import { expect, test } from "vitest";
 import { AnswerQuestionService } from "./answer-question";
 import { IAnswerRepository } from "@/domain/repositories/answer-repository-interface";
 
