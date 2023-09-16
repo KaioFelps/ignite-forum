@@ -11,7 +11,7 @@ const fakeAnswerRepository: IAnswerRepository = {
 test("create answer", async () => {
   const answerQuestion = new AnswerQuestionService(fakeAnswerRepository);
 
-  const answer = await answerQuestion.execute({
+  const { answer } = await answerQuestion.execute({
     questionId: "1",
     instructorId: "1",
     content: "Nova resposta",
