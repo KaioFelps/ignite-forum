@@ -1,21 +1,24 @@
-import { IQuestionRepository } from "../repositories/question-repository-interface";
+import { InMemoryQuestionRepository } from "test/repositories/in-memory-question-repository";
 import { CreateQuestionService } from "./create-question";
 
-const fakeQuestionRepository: IQuestionRepository = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async create(answer) {
-    return;
-  },
-};
+let inMemoryRepository: InMemoryQuestionRepository;
+let sut: CreateQuestionService;
 
-test("create question", async () => {
-  const createQuestion = new CreateQuestionService(fakeQuestionRepository);
-
-  const { question } = await createQuestion.execute({
-    authorId: "1",
-    content: "Sample question content here",
-    title: "Sample question title",
+describe("Create question service", () => {
+  beforeEach(() => {
+    inMemoryRepository = new InMemoryQuestionRepository();
+    sut = new CreateQuestionService(inMemoryRepository);
   });
 
-  expect(question.title).toEqual("Sample question title");
+  test("if it's possible to create a question", async () => {
+    const { question } = await sut.execute({
+      authorId: "1",
+      content: "Sample question content here",
+      title: "Sample question title",
+    });
+
+    expect(question.title).toEqual("Sample question title");
+    expect(inMemoryRepository.items[0].id).toEqual(question.id);
+    expect(question.id).toBeTruthy();
+  });
 });
