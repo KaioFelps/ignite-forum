@@ -14,3 +14,11 @@ Nós descobrimos nossos services (use cases) e entidades através de conversas c
 
 # Services (use cases)
 São pedaços de código que realizam ações independente de qualquer dependência e desconectada do alheio à aplicação.
+
+---
+
+# Subdomínios
+São as repartições/setores do problema; aplicação num contexto geral.
+
+- application -> partes relacionadas ao código, à aplicação
+- enterprise -> regras de negócio, a camada dos experts de domínios
