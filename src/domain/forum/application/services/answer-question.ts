@@ -1,6 +1,6 @@
-import { UniqueEntityId } from "../../core/entities/unique-entity-id";
-import { Answer } from "../entities/answer";
+import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { IAnswerRepository } from "../repositories/answer-repository-interface";
+import { Answer } from "../../enterprise/entities/answer";
 
 interface IAnswerQuestionService {
   instructorId: string;

@@ -1,5 +1,5 @@
+import { IAnswerRepository } from "../repositories/answer-repository-interface";
 import { AnswerQuestionService } from "./answer-question";
-import { IAnswerRepository } from "@/domain/repositories/answer-repository-interface";
 
 const fakeAnswerRepository: IAnswerRepository = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
