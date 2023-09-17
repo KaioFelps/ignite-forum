@@ -3,7 +3,7 @@ import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/@types/optional";
 
-interface IQuestion {
+export interface IQuestion {
   authorId: UniqueEntityId;
   bestAnswerId?: UniqueEntityId;
   title: string;
