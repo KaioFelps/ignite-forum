@@ -46,4 +46,18 @@ describe("Fetch latest questions service", () => {
       }),
     ]);
   });
+
+  test("if latest questions are comming paginated", async () => {
+    for (let i = 1; i <= 22; i++) {
+      await inMemoryRepository.create(MakeQuestionFactory.execute({}));
+    }
+
+    let { questions } = await sut.execute({ page: 1 });
+
+    expect(questions).toHaveLength(20);
+
+    questions = (await sut.execute({ page: 2 })).questions;
+
+    expect(questions).toHaveLength(2);
+  });
 });
