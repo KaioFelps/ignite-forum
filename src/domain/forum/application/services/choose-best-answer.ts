@@ -1,4 +1,3 @@
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Question } from "../../enterprise/entities/question";
 import { IQuestionRepository } from "../repositories/question-repository-interface";
 import { IAnswerRepository } from "../repositories/answer-repository-interface";
