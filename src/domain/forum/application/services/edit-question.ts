@@ -1,3 +1,4 @@
+import { Question } from "../../enterprise/entities/question";
 import { IQuestionRepository } from "../repositories/question-repository-interface";
 
 interface IEditQuestionService {
@@ -5,6 +6,10 @@ interface IEditQuestionService {
   questionId: string;
   title: string;
   content: string;
+}
+
+interface IEditQuestionResponse {
+  question: Question;
 }
 
 export class EditQuestionService {
@@ -15,7 +20,7 @@ export class EditQuestionService {
     questionId,
     content,
     title,
-  }: IEditQuestionService): Promise<void> {
+  }: IEditQuestionService): Promise<IEditQuestionResponse> {
     const question = await this.questionRepository.findById(questionId);
 
     if (!question) {
@@ -30,5 +35,7 @@ export class EditQuestionService {
     question.content = content;
 
     await this.questionRepository.save(question);
+
+    return { question };
   }
 }
