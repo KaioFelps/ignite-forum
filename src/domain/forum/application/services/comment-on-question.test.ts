@@ -1,7 +1,7 @@
 import { InMemoryQuestionRepository } from "test/repositories/in-memory-question-repository";
-import { InMemoryQuestionCommentRepository } from "test/repositories/in-memory-question-comment.repository";
 import { CommentOnQuestionService } from "./comment-on-question";
 import { MakeQuestionFactory } from "test/factories/make-question";
+import { InMemoryQuestionCommentRepository } from "test/repositories/in-memory-question-comment-repository";
 
 let inMemoryQuestionRepository: InMemoryQuestionRepository;
 let inMemoryQuestionCommentRepository: InMemoryQuestionCommentRepository;
