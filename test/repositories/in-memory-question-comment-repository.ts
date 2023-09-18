@@ -1,3 +1,4 @@
+import { PaginationParams } from "@/core/repositories/pagination-params";
 import { IQuestionCommentRepository } from "@/domain/forum/application/repositories/question-comment-repository";
 import { QuestionComment } from "@/domain/forum/enterprise/entities/question-comment";
 
@@ -23,5 +24,19 @@ export class InMemoryQuestionCommentRepository
     );
 
     return questionComment ?? null;
+  }
+
+  async findManyByQuestionId(
+    questionId: string,
+    { page }: PaginationParams,
+  ): Promise<QuestionComment[]> {
+    const LIMIT_PER_PAGE = 20;
+    const OFFSET = (page - 1) * LIMIT_PER_PAGE;
+
+    const questionComments = this.items
+      .filter((item) => item.questionId.toString() === questionId)
+      .slice(OFFSET, page * LIMIT_PER_PAGE);
+
+    return questionComments;
   }
 }
