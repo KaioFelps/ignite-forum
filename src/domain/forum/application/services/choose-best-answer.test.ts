@@ -3,6 +3,7 @@ import { InMemoryQuestionRepository } from "test/repositories/in-memory-question
 import { ChooseBestAnswerService } from "./choose-best-answer";
 import { MakeAnswerFactory } from "test/factories/make-answer";
 import { MakeQuestionFactory } from "test/factories/make-question";
+import { NotAllowedError } from "./errors/not-allowed-error";
 
 let inMemoryAnswerRepository: InMemoryAnswerRepository;
 let inMemoryQuestionRepository: InMemoryQuestionRepository;
@@ -39,16 +40,19 @@ describe("Choose best answer service", () => {
 
   test("if it's impossible to choose a best answer if user is not the author", async () => {
     const question = MakeQuestionFactory.execute();
-    const answer = MakeAnswerFactory.execute();
+    const answer = MakeAnswerFactory.execute({
+      questionId: question.id,
+    });
 
     await inMemoryQuestionRepository.create(question);
     await inMemoryAnswerRepository.create(answer);
 
-    const chooseBestAnswerRequest = sut.execute({
+    const response = await sut.execute({
       answerId: answer.id.toString(),
-      authorId: question.authorId.toString(),
+      authorId: "not-the-author-id",
     });
 
-    expect(chooseBestAnswerRequest).rejects.toBeInstanceOf(Error);
+    expect(response.isLeft()).toBe(true);
+    expect(response.value).toBeInstanceOf(NotAllowedError);
   });
 });

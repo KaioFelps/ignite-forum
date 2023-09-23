@@ -2,6 +2,7 @@ import { InMemoryQuestionCommentRepository } from "test/repositories/in-memory-q
 import { DeleteQuestionCommentService } from "./delete-question-comment";
 import { MakeQuestionCommentFactory } from "test/factories/make-question-comment";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { NotAllowedError } from "./errors/not-allowed-error";
 
 let inMemoryRepository: InMemoryQuestionCommentRepository;
 let sut: DeleteQuestionCommentService;
@@ -36,11 +37,12 @@ describe("Delete question comment service", () => {
 
     await inMemoryRepository.create(newQuestionComment);
 
-    const deleteRequest = sut.execute({
+    const response = await sut.execute({
       questionCommentId: "question-comment-1",
       authorId: "not-the-author-id",
     });
 
-    expect(deleteRequest).rejects.toBeInstanceOf(Error);
+    expect(response.isLeft()).toBe(true);
+    expect(response.value).toBeInstanceOf(NotAllowedError);
   });
 });

@@ -11,13 +11,13 @@ describe("Create answer service", () => {
   });
 
   test("if it's possible to create an answer", async () => {
-    const { answer } = await sut.execute({
+    const response = await sut.execute({
       questionId: "1",
       instructorId: "1",
       content: "Nova resposta",
     });
 
-    expect(answer.content).toEqual("Nova resposta");
-    expect(inMemoryRepository.items[0].id).toEqual(answer.id);
+    expect(response.isRight()).toBe(true);
+    expect(inMemoryRepository.items[0]).toEqual(response.value?.answer);
   });
 });

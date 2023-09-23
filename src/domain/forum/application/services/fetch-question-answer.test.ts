@@ -33,12 +33,13 @@ describe("Fetch question's answers service", () => {
 
     await inMemoryAnswerRepository.create(MakeAnswerFactory.execute({}));
 
-    const { answers } = await sut.execute({
+    const response = await sut.execute({
       page: 1,
       questionId: question.id.toString(),
     });
 
-    expect(answers).toHaveLength(2);
+    expect(response.isRight()).toBe(true);
+    expect(response.value?.answers).toHaveLength(2);
   });
 
   test("if answers are comming paginated", async () => {
@@ -51,17 +52,20 @@ describe("Fetch question's answers service", () => {
       );
     }
 
-    let { answers } = await sut.execute({
+    let response = await sut.execute({
       questionId: question.id.toString(),
       page: 1,
     });
 
-    expect(answers).toHaveLength(20);
+    expect(response.isRight()).toBe(true);
+    expect(response.value?.answers).toHaveLength(20);
 
-    answers = (
-      await sut.execute({ questionId: question.id.toString(), page: 2 })
-    ).answers;
+    response = await sut.execute({
+      questionId: question.id.toString(),
+      page: 2,
+    });
 
-    expect(answers).toHaveLength(2);
+    expect(response.isRight()).toBe(true);
+    expect(response.value?.answers).toHaveLength(2);
   });
 });

@@ -35,12 +35,13 @@ describe("Fetch answer's comment service", () => {
       }),
     );
 
-    const { answerComments } = await sut.execute({
+    const response = await sut.execute({
       answerId: "answer-1",
       page: 1,
     });
 
-    expect(answerComments).toHaveLength(3);
+    expect(response.isRight()).toBe(true);
+    expect(response.value?.answerComments).toHaveLength(3);
   });
 
   test("if comments are comming paginated", async () => {
@@ -53,17 +54,17 @@ describe("Fetch answer's comment service", () => {
       );
     }
 
-    let { answerComments } = await sut.execute({
+    let response = await sut.execute({
       answerId: answer.id.toString(),
       page: 1,
     });
 
-    expect(answerComments).toHaveLength(20);
+    expect(response.isRight()).toBe(true);
+    expect(response.value?.answerComments).toHaveLength(20);
 
-    answerComments = (
-      await sut.execute({ answerId: answer.id.toString(), page: 2 })
-    ).answerComments;
+    response = await sut.execute({ answerId: answer.id.toString(), page: 2 });
 
-    expect(answerComments).toHaveLength(2);
+    expect(response.isRight()).toBe(true);
+    expect(response.value?.answerComments).toHaveLength(2);
   });
 });

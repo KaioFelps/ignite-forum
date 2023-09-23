@@ -30,11 +30,12 @@ describe("Fetch latest questions service", () => {
       }),
     );
 
-    const { questions } = await sut.execute({
+    const response = await sut.execute({
       page: 1,
     });
 
-    expect(questions).toEqual([
+    expect(response.isRight()).toBe(true);
+    expect(response.value?.questions).toEqual([
       expect.objectContaining({
         createdAt: new Date(2022, 0, 23),
       }),
@@ -52,12 +53,14 @@ describe("Fetch latest questions service", () => {
       await inMemoryRepository.create(MakeQuestionFactory.execute({}));
     }
 
-    let { questions } = await sut.execute({ page: 1 });
+    let response = await sut.execute({ page: 1 });
 
-    expect(questions).toHaveLength(20);
+    expect(response.isRight()).toBe(true);
+    expect(response.value?.questions).toHaveLength(20);
 
-    questions = (await sut.execute({ page: 2 })).questions;
+    response = await sut.execute({ page: 2 });
 
-    expect(questions).toHaveLength(2);
+    expect(response.isRight()).toBe(true);
+    expect(response.value?.questions).toHaveLength(2);
   });
 });

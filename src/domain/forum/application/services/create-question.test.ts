@@ -11,14 +11,13 @@ describe("Create question service", () => {
   });
 
   test("if it's possible to create a question", async () => {
-    const { question } = await sut.execute({
+    const response = await sut.execute({
       authorId: "1",
       content: "Sample question content here",
       title: "Sample question title",
     });
 
-    expect(question.title).toEqual("Sample question title");
-    expect(inMemoryRepository.items[0].id).toEqual(question.id);
-    expect(question.id).toBeTruthy();
+    expect(inMemoryRepository.items[0].id).toEqual(response.value?.question.id);
+    expect(response.isRight()).toBe(true);
   });
 });
