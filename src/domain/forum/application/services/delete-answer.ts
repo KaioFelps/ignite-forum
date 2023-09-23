@@ -1,24 +1,37 @@
+import { Either, left, right } from "@/core/either";
 import { IAnswerRepository } from "../repositories/answer-repository-interface";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { NotAllowedError } from "./errors/not-allowed-error";
 
 interface IDeleteAnswerService {
   authorId: string;
   answerId: string;
 }
 
+type IDeleteAnswerResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  object
+>;
+
 export class DeleteAnswerService {
   constructor(private answerRepository: IAnswerRepository) {}
 
-  async execute({ authorId, answerId }: IDeleteAnswerService): Promise<void> {
+  async execute({
+    authorId,
+    answerId,
+  }: IDeleteAnswerService): Promise<IDeleteAnswerResponse> {
     const answer = await this.answerRepository.findById(answerId);
 
     if (!answer) {
-      throw new Error("Answer not found.");
+      return left(new ResourceNotFoundError());
     }
 
     if (authorId !== answer.authorId.toString()) {
-      throw new Error("Not allowed.");
+      return left(new NotAllowedError());
     }
 
     await this.answerRepository.delete(answer);
+
+    return right({});
   }
 }

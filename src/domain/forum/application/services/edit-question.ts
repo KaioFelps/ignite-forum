@@ -1,5 +1,8 @@
+import { Either, left, right } from "@/core/either";
 import { Question } from "../../enterprise/entities/question";
 import { IQuestionRepository } from "../repositories/question-repository-interface";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { NotAllowedError } from "./errors/not-allowed-error";
 
 interface IEditQuestionService {
   authorId: string;
@@ -8,9 +11,10 @@ interface IEditQuestionService {
   content: string;
 }
 
-interface IEditQuestionResponse {
-  question: Question;
-}
+type IEditQuestionResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { question: Question }
+>;
 
 export class EditQuestionService {
   constructor(private questionRepository: IQuestionRepository) {}
@@ -24,11 +28,11 @@ export class EditQuestionService {
     const question = await this.questionRepository.findById(questionId);
 
     if (!question) {
-      throw new Error("Question not found.");
+      return left(new ResourceNotFoundError());
     }
 
     if (authorId !== question.authorId.toString()) {
-      throw new Error("Not allowed.");
+      return left(new NotAllowedError());
     }
 
     question.title = title;
@@ -36,6 +40,6 @@ export class EditQuestionService {
 
     await this.questionRepository.save(question);
 
-    return { question };
+    return right({ question });
   }
 }

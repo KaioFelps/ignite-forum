@@ -1,3 +1,4 @@
+import { Either, right } from "@/core/either";
 import { Answer } from "../../enterprise/entities/answer";
 import { IAnswerRepository } from "../repositories/answer-repository-interface";
 
@@ -6,9 +7,7 @@ interface IFetchQuestionAnswersService {
   questionId: string;
 }
 
-interface IFetchQuestionAnswersResponse {
-  answers: Answer[];
-}
+type IFetchQuestionAnswersResponse = Either<null, { answers: Answer[] }>;
 
 export class FetchQuestionAnswersService {
   constructor(private answerRepository: IAnswerRepository) {}
@@ -24,6 +23,6 @@ export class FetchQuestionAnswersService {
       },
     );
 
-    return { answers };
+    return right({ answers });
   }
 }

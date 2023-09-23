@@ -1,3 +1,4 @@
+import { Either, right } from "@/core/either";
 import { Question } from "../../enterprise/entities/question";
 import { IQuestionRepository } from "../repositories/question-repository-interface";
 
@@ -5,9 +6,7 @@ interface IGetQuestionBySlugService {
   slug: string;
 }
 
-interface IGetQuestionBySlugResponse {
-  question: Question;
-}
+type IGetQuestionBySlugResponse = Either<null, { question: Question }>;
 
 export class GetQuestionBySlugService {
   constructor(private questionRepository: IQuestionRepository) {}
@@ -21,6 +20,6 @@ export class GetQuestionBySlugService {
       throw new Error("Question not found.");
     }
 
-    return { question };
+    return right({ question });
   }
 }
