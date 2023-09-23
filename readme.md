@@ -18,6 +18,7 @@ A partir dessas conversas, traduzimos as necessidades em códigos **DE FORMA PUR
         - Question -- Attachment[]
         - sempre que posso criar ou editar ou apagar uma question, posso tbm criar, editar ou apagar seus anexos
     - Os agregados podem fazer coisas que entidades mais simples não teriam o direito de fazer
+    - Root é a entidade principal dentro de um agregado de entidades
 
 - Watched lists
     - uma patter; classe que permite que nós tenhamos mais informações sobre itens contidos numa lista
