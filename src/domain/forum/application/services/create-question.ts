@@ -3,6 +3,7 @@ import { Question } from "../../enterprise/entities/question";
 import { IQuestionRepository } from "../repositories/question-repository-interface";
 import { Either, right } from "@/core/either";
 import { QuestionAttachment } from "../../enterprise/entities/question-attachment";
+import { QuestionAttachmentList } from "../../enterprise/entities/question-attachment-list";
 
 interface ICreateQuestionService {
   authorId: string;
@@ -35,7 +36,7 @@ export class CreateQuestionService {
       }),
     );
 
-    question.attachments = questionAttachments;
+    question.attachments = new QuestionAttachmentList(questionAttachments);
 
     await this.questionRepository.create(question);
 

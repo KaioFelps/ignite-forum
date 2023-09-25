@@ -21,8 +21,10 @@ describe("Create question service", () => {
 
     expect(response.isRight()).toBe(true);
     expect(inMemoryRepository.items[0].id).toEqual(response.value?.question.id);
-    expect(inMemoryRepository.items[0].attachments).toHaveLength(2);
-    expect(inMemoryRepository.items[0].attachments).toEqual([
+    expect(inMemoryRepository.items[0].attachments.currentItems).toHaveLength(
+      2,
+    );
+    expect(inMemoryRepository.items[0].attachments.getItems()).toEqual([
       expect.objectContaining({ attachmentId: new UniqueEntityId("1") }),
       expect.objectContaining({ attachmentId: new UniqueEntityId("2") }),
     ]);
