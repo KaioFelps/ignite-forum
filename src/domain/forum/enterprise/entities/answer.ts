@@ -1,11 +1,13 @@
 import { Optional } from "@/core/@types/optional";
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { AnswerAttachmentList } from "./answer-attachment-list";
 
 export interface IAnswer {
   content: string;
   authorId: UniqueEntityId;
   questionId: UniqueEntityId;
+  attachments: AnswerAttachmentList;
   createdAt: Date;
   updatedAt?: Date;
 }
@@ -17,6 +19,15 @@ export class Answer extends Entity<IAnswer> {
 
   get questionId() {
     return this.props.questionId;
+  }
+
+  get attachments() {
+    return this.props.attachments;
+  }
+
+  set attachments(attachments: AnswerAttachmentList) {
+    this.props.attachments = attachments;
+    this.touch();
   }
 
   get createdAt() {
