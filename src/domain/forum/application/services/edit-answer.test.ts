@@ -3,14 +3,23 @@ import { EditAnswerService } from "./edit-answer";
 import { MakeAnswerFactory } from "test/factories/make-answer";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { NotAllowedError } from "./errors/not-allowed-error";
+import { InMemoryAnswerAttachmentRepository } from "test/repositories/in-memory-answer-attachment-repository";
+import { MakeAnswerAttachmentFactory } from "test/factories/make-answer-attachment";
 
-let inMemoryRepository: InMemoryAnswerRepository;
+let inMemoryAnswerAttachmentRepository: InMemoryAnswerAttachmentRepository;
+
+let inMemoryAnswerRepository: InMemoryAnswerRepository;
 let sut: EditAnswerService;
 
 describe("Edit answer service", () => {
   beforeEach(() => {
-    inMemoryRepository = new InMemoryAnswerRepository();
-    sut = new EditAnswerService(inMemoryRepository);
+    inMemoryAnswerAttachmentRepository =
+      new InMemoryAnswerAttachmentRepository();
+    inMemoryAnswerRepository = new InMemoryAnswerRepository();
+    sut = new EditAnswerService(
+      inMemoryAnswerRepository,
+      inMemoryAnswerAttachmentRepository,
+    );
   });
 
   test("if it's possible to edit a answer", async () => {
@@ -19,15 +28,27 @@ describe("Edit answer service", () => {
       new UniqueEntityId("answer-1"),
     );
 
-    await inMemoryRepository.create(newAnswer);
+    await inMemoryAnswerRepository.create(newAnswer);
+
+    inMemoryAnswerAttachmentRepository.items.push(
+      MakeAnswerAttachmentFactory.execute({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityId("1"),
+      }),
+      MakeAnswerAttachmentFactory.execute({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityId("2"),
+      }),
+    );
 
     await sut.execute({
       authorId: newAnswer.authorId.toString(),
       answerId: newAnswer.id.toString(),
       content: "Conteúdo teste",
+      attachmentIds: ["1", "2"],
     });
 
-    expect(inMemoryRepository.items[0]).toMatchObject({
+    expect(inMemoryAnswerRepository.items[0]).toMatchObject({
       content: "Conteúdo teste",
     });
   });
@@ -38,12 +59,13 @@ describe("Edit answer service", () => {
       new UniqueEntityId("answer-1"),
     );
 
-    await inMemoryRepository.create(newAnswer);
+    await inMemoryAnswerRepository.create(newAnswer);
 
     const response = await sut.execute({
       authorId: "wrong-author-id",
       answerId: newAnswer.id.toString(),
       content: "Conteúdo teste",
+      attachmentIds: [],
     });
 
     expect(response.isLeft()).toBe(true);
