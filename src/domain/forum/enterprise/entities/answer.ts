@@ -51,9 +51,16 @@ export class Answer extends Entity<IAnswer> {
     this.props.updatedAt = new Date();
   }
 
-  static create(props: Optional<IAnswer, "createdAt">, id?: UniqueEntityId) {
+  static create(
+    props: Optional<IAnswer, "createdAt" | "attachments">,
+    id?: UniqueEntityId,
+  ) {
     const answer = new Answer(
-      { ...props, createdAt: props.createdAt ?? new Date() },
+      {
+        ...props,
+        attachments: props.attachments ?? new AnswerAttachmentList(),
+        createdAt: props.createdAt ?? new Date(),
+      },
       id,
     );
 
