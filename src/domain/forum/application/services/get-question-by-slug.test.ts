@@ -2,14 +2,21 @@ import { InMemoryQuestionRepository } from "test/repositories/in-memory-question
 import { GetQuestionBySlugService } from "./get-question-by-slug";
 import { MakeQuestionFactory } from "test/factories/make-question";
 import { Slug } from "../../enterprise/entities/value-objects/slug";
+import { InMemoryQuestionAttachmentRepository } from "test/repositories/in-memory-question-attachment-repository";
 
-let inMemoryRepository: InMemoryQuestionRepository;
+let inMemoryQuestionRepository: InMemoryQuestionRepository;
+let inMemoryQuestionAttachmentRepository: InMemoryQuestionAttachmentRepository;
+
 let sut: GetQuestionBySlugService;
 
 describe("Get question by slug service", () => {
   beforeEach(() => {
-    inMemoryRepository = new InMemoryQuestionRepository();
-    sut = new GetQuestionBySlugService(inMemoryRepository);
+    inMemoryQuestionAttachmentRepository =
+      new InMemoryQuestionAttachmentRepository();
+    inMemoryQuestionRepository = new InMemoryQuestionRepository(
+      inMemoryQuestionAttachmentRepository,
+    );
+    sut = new GetQuestionBySlugService(inMemoryQuestionRepository);
   });
 
   test("if it's possible to get a question by it's slug", async () => {
@@ -17,7 +24,7 @@ describe("Get question by slug service", () => {
       slug: Slug.create("slug-de-teste"),
     });
 
-    await inMemoryRepository.create(newQuestion);
+    await inMemoryQuestionRepository.create(newQuestion);
 
     const response = await sut.execute({
       slug: "slug-de-teste",

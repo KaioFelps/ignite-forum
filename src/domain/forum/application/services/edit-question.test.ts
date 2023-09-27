@@ -12,7 +12,11 @@ let sut: EditQuestionService;
 
 describe("Edit question service", () => {
   beforeEach(() => {
-    inMemoryQuestionRepository = new InMemoryQuestionRepository();
+    inMemoryQuestionAttachmentRepository =
+      new InMemoryQuestionAttachmentRepository();
+    inMemoryQuestionRepository = new InMemoryQuestionRepository(
+      inMemoryQuestionAttachmentRepository,
+    );
     inMemoryQuestionAttachmentRepository =
       new InMemoryQuestionAttachmentRepository();
     sut = new EditQuestionService(
