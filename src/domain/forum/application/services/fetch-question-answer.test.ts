@@ -3,15 +3,31 @@ import { MakeQuestionFactory } from "test/factories/make-question";
 import { InMemoryAnswerRepository } from "test/repositories/in-memory-answer-repository";
 import { FetchQuestionAnswersService } from "./fetch-question-answers";
 import { MakeAnswerFactory } from "test/factories/make-answer";
+import { InMemoryQuestionAttachmentRepository } from "test/repositories/in-memory-question-attachment-repository";
+import { InMemoryAnswerAttachmentRepository } from "test/repositories/in-memory-answer-attachment-repository";
 
+let inMemoryAnswerAttachmentRepository: InMemoryAnswerAttachmentRepository;
+let inMemoryQuestionAttachmentRepository: InMemoryQuestionAttachmentRepository;
 let inMemoryQuestionRepository: InMemoryQuestionRepository;
 let inMemoryAnswerRepository: InMemoryAnswerRepository;
 let sut: FetchQuestionAnswersService;
 
 describe("Fetch question's answers service", () => {
   beforeEach(() => {
-    inMemoryQuestionRepository = new InMemoryQuestionRepository();
-    inMemoryAnswerRepository = new InMemoryAnswerRepository();
+    inMemoryAnswerAttachmentRepository =
+      new InMemoryAnswerAttachmentRepository();
+
+    inMemoryQuestionAttachmentRepository =
+      new InMemoryQuestionAttachmentRepository();
+
+    inMemoryQuestionRepository = new InMemoryQuestionRepository(
+      inMemoryQuestionAttachmentRepository,
+    );
+
+    inMemoryAnswerRepository = new InMemoryAnswerRepository(
+      inMemoryAnswerAttachmentRepository,
+    );
+
     sut = new FetchQuestionAnswersService(inMemoryAnswerRepository);
   });
 

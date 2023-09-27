@@ -4,15 +4,24 @@ import { InMemoryAnswerCommentRepository } from "test/repositories/in-memory-ans
 import { MakeAnswerCommentFactory } from "test/factories/make-answer-comment";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { InMemoryAnswerRepository } from "test/repositories/in-memory-answer-repository";
+import { InMemoryAnswerAttachmentRepository } from "test/repositories/in-memory-answer-attachment-repository";
 
+let inMemoryAnswerAttachmentRepository: InMemoryAnswerAttachmentRepository;
 let inMemoryAnswerRepository: InMemoryAnswerRepository;
 let inMemoryAnswerCommentRepository: InMemoryAnswerCommentRepository;
 let sut: FetchAnswerCommentService;
 
 describe("Fetch answer's comment service", () => {
   beforeEach(() => {
-    inMemoryAnswerRepository = new InMemoryAnswerRepository();
+    inMemoryAnswerAttachmentRepository =
+      new InMemoryAnswerAttachmentRepository();
+
+    inMemoryAnswerRepository = new InMemoryAnswerRepository(
+      inMemoryAnswerAttachmentRepository,
+    );
+
     inMemoryAnswerCommentRepository = new InMemoryAnswerCommentRepository();
+
     sut = new FetchAnswerCommentService(inMemoryAnswerCommentRepository);
   });
 

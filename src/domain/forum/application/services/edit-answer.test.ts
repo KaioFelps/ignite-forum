@@ -7,7 +7,6 @@ import { InMemoryAnswerAttachmentRepository } from "test/repositories/in-memory-
 import { MakeAnswerAttachmentFactory } from "test/factories/make-answer-attachment";
 
 let inMemoryAnswerAttachmentRepository: InMemoryAnswerAttachmentRepository;
-
 let inMemoryAnswerRepository: InMemoryAnswerRepository;
 let sut: EditAnswerService;
 
@@ -15,7 +14,11 @@ describe("Edit answer service", () => {
   beforeEach(() => {
     inMemoryAnswerAttachmentRepository =
       new InMemoryAnswerAttachmentRepository();
-    inMemoryAnswerRepository = new InMemoryAnswerRepository();
+
+    inMemoryAnswerRepository = new InMemoryAnswerRepository(
+      inMemoryAnswerAttachmentRepository,
+    );
+
     sut = new EditAnswerService(
       inMemoryAnswerRepository,
       inMemoryAnswerAttachmentRepository,

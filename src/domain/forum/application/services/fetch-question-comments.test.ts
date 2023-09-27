@@ -4,15 +4,24 @@ import { InMemoryQuestionCommentRepository } from "test/repositories/in-memory-q
 import { MakeQuestionCommentFactory } from "test/factories/make-question-comment";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { InMemoryQuestionRepository } from "test/repositories/in-memory-question-repository";
+import { InMemoryQuestionAttachmentRepository } from "test/repositories/in-memory-question-attachment-repository";
 
+let inMemoryQuestionAttachmentRepository: InMemoryQuestionAttachmentRepository;
 let inMemoryQuestionRepository: InMemoryQuestionRepository;
 let inMemoryQuestionCommentRepository: InMemoryQuestionCommentRepository;
 let sut: FetchQuestionCommentService;
 
 describe("Fetch question's comment service", () => {
   beforeEach(() => {
-    inMemoryQuestionRepository = new InMemoryQuestionRepository();
+    inMemoryQuestionAttachmentRepository =
+      new InMemoryQuestionAttachmentRepository();
+
+    inMemoryQuestionRepository = new InMemoryQuestionRepository(
+      inMemoryQuestionAttachmentRepository,
+    );
+
     inMemoryQuestionCommentRepository = new InMemoryQuestionCommentRepository();
+
     sut = new FetchQuestionCommentService(inMemoryQuestionCommentRepository);
   });
 

@@ -1,30 +1,38 @@
 import { InMemoryQuestionRepository } from "test/repositories/in-memory-question-repository";
 import { FetchLatestQuestionsService } from "./fetch-latest-questions";
 import { MakeQuestionFactory } from "test/factories/make-question";
+import { InMemoryQuestionAttachmentRepository } from "test/repositories/in-memory-question-attachment-repository";
 
-let inMemoryRepository: InMemoryQuestionRepository;
+let inMemoryQuestionAttachmentRepository: InMemoryQuestionAttachmentRepository;
+let inMemoryQuestionRepository: InMemoryQuestionRepository;
 let sut: FetchLatestQuestionsService;
 
 describe("Fetch latest questions service", () => {
   beforeEach(() => {
-    inMemoryRepository = new InMemoryQuestionRepository();
-    sut = new FetchLatestQuestionsService(inMemoryRepository);
+    inMemoryQuestionAttachmentRepository =
+      new InMemoryQuestionAttachmentRepository();
+
+    inMemoryQuestionRepository = new InMemoryQuestionRepository(
+      inMemoryQuestionAttachmentRepository,
+    );
+
+    sut = new FetchLatestQuestionsService(inMemoryQuestionRepository);
   });
 
   test("if it's possible to get paginated list of latest questions", async () => {
-    await inMemoryRepository.create(
+    await inMemoryQuestionRepository.create(
       MakeQuestionFactory.execute({
         createdAt: new Date(2022, 0, 20),
       }),
     );
 
-    await inMemoryRepository.create(
+    await inMemoryQuestionRepository.create(
       MakeQuestionFactory.execute({
         createdAt: new Date(2022, 0, 18),
       }),
     );
 
-    await inMemoryRepository.create(
+    await inMemoryQuestionRepository.create(
       MakeQuestionFactory.execute({
         createdAt: new Date(2022, 0, 23),
       }),
@@ -50,7 +58,7 @@ describe("Fetch latest questions service", () => {
 
   test("if latest questions are comming paginated", async () => {
     for (let i = 1; i <= 22; i++) {
-      await inMemoryRepository.create(MakeQuestionFactory.execute({}));
+      await inMemoryQuestionRepository.create(MakeQuestionFactory.execute({}));
     }
 
     let response = await sut.execute({ page: 1 });
