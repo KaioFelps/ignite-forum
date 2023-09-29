@@ -18,7 +18,31 @@ São pedaços de código que realizam ações independente de qualquer dependên
 ---
 
 # Subdomínios
-São as repartições/setores do problema; aplicação num contexto geral.
+São as repartições/setores do problema; aplicação num contexto geral; é como repartimos os problemas em pequenas partes da aplicação.
+
+Tudo que toca o problema que a gente está resolvendo pode ser um subdomínio
 
 - application -> partes relacionadas ao código, à aplicação
 - enterprise -> regras de negócio, a camada dos experts de domínios
+
+São, geralmente, dividido em três tipos:
+- **Core domains** -> o que dá dinheiro; tudo que envolve dinheiro; tudo que é super importante e não pode parar nem ser terceirizado
+- **Supporting domains** -> é aquilo que dá suporte para o funcionamento do core
+- **Generic domains** -> são os subdomínios que não são tão necessários/importantes; poderiam ser facilmente substituídos por serviços terceirizados
+
+## Exemplo: e-commerce
+**Core**
+- compra
+- catálogo
+- pagamento
+- entrega
+
+**Supporting**
+- estoque
+
+**Generic**
+- notificação ao cliente
+- promoções
+- chat
+
+Os subdomínios também precisam ser independentes, isto é, eles não podem "se chamar". Ao invés disso, é preciso fornecer um meio de comunicação entre os subdomínios sem que eles dependam um no outro, deixando-os sempre desacoplados.

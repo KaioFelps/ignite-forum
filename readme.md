@@ -36,3 +36,7 @@ A partir dessas conversas, traduzimos as necessidades em códigos **DE FORMA PUR
 - adicionar um novo anexo (create)
 - remover o segundo anexo que tinha sido criado antes (delete)
 - editar um anexo existente (update)
+
+---
+
+[a relative link](\src\domain\readme.md)Domínios e subdomínios
