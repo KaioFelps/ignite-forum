@@ -1,5 +1,4 @@
 import { Either, left, right } from "@/core/either";
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Notification } from "../../enterprise/entities/notification";
 import { INotificationRepository } from "../repositories/notification-repository";
 import { ResourceNotFoundError } from "@/domain/forum/application/services/errors/resource-not-found-error";
