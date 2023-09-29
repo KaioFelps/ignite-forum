@@ -46,3 +46,6 @@ São, geralmente, dividido em três tipos:
 - chat
 
 Os subdomínios também precisam ser independentes, isto é, eles não podem "se chamar". Ao invés disso, é preciso fornecer um meio de comunicação entre os subdomínios sem que eles dependam um no outro, deixando-os sempre desacoplados.
+
+### Fluxo de eventos de domínio
+![diagrama do fluxo de eventos de domínio](/public/subdomain-events.png)
