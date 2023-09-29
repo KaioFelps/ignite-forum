@@ -31,6 +31,10 @@ export class Notification extends Entity<INotification> {
     return this.props.readAt;
   }
 
+  read() {
+    this.props.readAt = new Date();
+  }
+
   static create(
     props: Optional<INotification, "createdAt">,
     id?: UniqueEntityId,
