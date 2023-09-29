@@ -39,4 +39,4 @@ A partir dessas conversas, traduzimos as necessidades em códigos **DE FORMA PUR
 
 ---
 
-[a relative link](\src\domain\readme.md)Domínios e subdomínios
+[Domínios e subdomínios](src\domain\readme.md)
