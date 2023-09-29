@@ -39,4 +39,4 @@ A partir dessas conversas, traduzimos as necessidades em códigos **DE FORMA PUR
 
 ---
 
-[Domínios e subdomínios](src\domain\readme.md)
+[Domínios e subdomínios](src\domain\)
