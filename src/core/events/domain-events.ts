@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AggregateRoot } from "../entities/aggregate-root";
 import { UniqueEntityId } from "../entities/unique-entity-id";
 import { DomainEvent } from "./domain-event";
@@ -17,9 +18,10 @@ export class DomainEvents {
   }
 
   private static dispatchAggregateEvents(aggregate: AggregateRoot<any>) {
-    aggregate.domainEvents.forEach((event: DomainEvent) =>
-      this.dispatch(event),
-    );
+    aggregate
+      // domain events
+      .getDomainEvents()
+      .forEach((event: DomainEvent) => this.dispatch(event));
   }
 
   private static removeAggregateFromMarkedDispatchList(
