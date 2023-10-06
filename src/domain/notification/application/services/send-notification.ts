@@ -9,7 +9,10 @@ interface ISendNotificationService {
   content: string;
 }
 
-type ISendNotificationResponse = Either<null, { notification: Notification }>;
+export type ISendNotificationResponse = Either<
+  null,
+  { notification: Notification }
+>;
 
 export class SendNotificationService {
   constructor(private notificationRepository: INotificationRepository) {}
