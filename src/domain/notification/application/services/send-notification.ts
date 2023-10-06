@@ -3,7 +3,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Notification } from "../../enterprise/entities/notification";
 import { INotificationRepository } from "../repositories/notification-repository";
 
-interface ISendNotificationService {
+export interface ISendNotificationService {
   recipientId: string;
   title: string;
   content: string;
