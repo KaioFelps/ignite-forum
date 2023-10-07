@@ -1,4 +1,4 @@
-import { Entity } from "@/core/entities/entity";
+import { AggregateRoot } from "@/core/entities/aggregate-root";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 export interface IComment {
@@ -10,7 +10,9 @@ export interface IComment {
 
 // abstract indica que ela nunca pode ser instanciada sozinha (new Class), mas somente estendida (implements Class)
 
-export abstract class Comment<Props extends IComment> extends Entity<Props> {
+export abstract class Comment<
+  Props extends IComment,
+> extends AggregateRoot<Props> {
   get authorId() {
     return this.props.authorId;
   }

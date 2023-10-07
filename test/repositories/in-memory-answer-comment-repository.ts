@@ -1,3 +1,4 @@
+import { DomainEvents } from "@/core/events/domain-events";
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { IAnswerCommentRepository } from "@/domain/forum/application/repositories/answer-comment-repository";
 import { AnswerComment } from "@/domain/forum/enterprise/entities/answer-comment";
@@ -9,6 +10,8 @@ export class InMemoryAnswerCommentRepository
 
   async create(answerComment: AnswerComment): Promise<void> {
     this.items.push(answerComment);
+
+    DomainEvents.dispatchEventsForAggregate(answerComment.id);
   }
 
   async delete(answerComment: AnswerComment): Promise<void> {
