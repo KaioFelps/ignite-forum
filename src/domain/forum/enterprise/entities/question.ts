@@ -49,6 +49,7 @@ export class Question extends AggregateRoot<IQuestion> {
 
   set bestAnswerId(bestAnswerId: undefined | UniqueEntityId) {
     this.props.bestAnswerId = bestAnswerId;
+    this.touch();
   }
 
   get attachments() {
